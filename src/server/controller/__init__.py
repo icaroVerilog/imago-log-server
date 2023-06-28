@@ -1,1 +1,2 @@
-from .create_log_controller import CreateLogController
+from .create_rest_log_controller import CreateRESTLogController
+from .create_rmi_log_controller  import CreateRMILogController
