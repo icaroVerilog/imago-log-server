@@ -18,10 +18,9 @@ class RetrieveRESTLogController:
             "time_spent",
             "server_ip_address", 
             "server_port",
-            "nameserver",
-            "object_name",
-            "object_method",
-            "response_status"
+            "http_method",
+            "url",
+            "http_status"
         )
         
         for log in response:
