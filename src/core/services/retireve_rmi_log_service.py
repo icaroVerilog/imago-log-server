@@ -1,13 +1,13 @@
 from core.database     import DatabaseConnection
-from core.entities     import RESTLogRetrieveParameters
+from core.entities     import RMILogRetrieveParameters
 from core.repositories import RetrieveLogRepository
 
-class RetrieveRESTLogService:
-    def execute(self, parameters:RESTLogRetrieveParameters):
+class RetrieveRMILogService:
+    def execute(self, parameters:RMILogRetrieveParameters):
         db_connection           = DatabaseConnection()
         retrieve_log_repository = RetrieveLogRepository()    
         
-        response = retrieve_log_repository.retrieve_rest_log(
+        response = retrieve_log_repository.retrieve_rmi_log(
             parameters,
             db_connection
         )

@@ -10,15 +10,17 @@ from flask_cors       import CORS
 from core.entities import RESTLog
 from core.entities import RMILog
 from core.entities import RESTLogRetrieveParameters
+from core.entities import RMILogRetrieveParameters
 
 from core.controller import CreateRESTLogController
 from core.controller import CreateRMILogController
 from core.controller import RetrieveRESTLogController
+from core.controller import RetrieveRMILogController
 
 create_rest_log_controller   = CreateRESTLogController()
 create_rmi_log_controller    = CreateRMILogController()
 retrieve_rest_log_controller = RetrieveRESTLogController()
-
+retrieve_rmi_log_controller  = RetrieveRMILogController()
 
 
 
@@ -109,8 +111,8 @@ def create_rmi_log():
         }),200
 
 
-@APP.route("/log/retrieve", methods = ["GET"])
-def retrieve_logs():
+@APP.route("/log/rest/retrieve", methods = ["GET"])
+def retrieve_rest_logs():
     if (request.method == "GET"):
         
         http_method   = request.headers["http-method"]
@@ -136,6 +138,35 @@ def retrieve_logs():
         return json.dumps({
             "message": "success", "data": response , "status_code": 200
         }),200
+
+@APP.route("/log/rmi/retrieve", methods = ["GET"])
+def retrieve_rmi_logs():
+    if (request.method == "GET"):
+        
+        object_name     = request.headers["object-name"]
+        object_method   = request.headers["object-method"]
+        response_status = request.headers["response-status"]
+        server_ip       = request.headers["server-ip"]
+        date_day        = request.headers["date-day"]
+        date_month      = request.headers["date-month"]
+        date_year       = request.headers["date-year"]
+        
+        parameters = RMILogRetrieveParameters(
+            object_name,
+            object_method,
+            response_status,
+            server_ip,
+            date_day,
+            date_month,
+            date_year,
+        )
+        
+        response = retrieve_rmi_log_controller.handle(parameters)
+
+        return json.dumps({
+            "message": "success", "data": response , "status_code": 200
+        }),200
+
 
 
 # @APP.route("/analytics", methods = ["GET"])
