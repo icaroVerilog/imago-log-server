@@ -2,15 +2,15 @@ import sys
 sys.dont_write_bytecode = True
 import json
 
-from flask            import jsonify
-from flask            import Flask
-from flask            import request
-from flask_cors       import CORS
+from flask           import jsonify
+from flask           import Flask
+from flask           import request
+from flask_cors      import CORS
 
-from core.entities import RESTLog
-from core.entities import RMILog
-from core.entities import RESTLogRetrieveParameters
-from core.entities import RMILogRetrieveParameters
+from core.entities   import RESTLog
+from core.entities   import RMILog
+from core.entities   import RESTLogRetrieveParameters
+from core.entities   import RMILogRetrieveParameters
 
 from core.controller import CreateRESTLogController
 from core.controller import CreateRMILogController
@@ -167,34 +167,6 @@ def retrieve_rmi_logs():
             "message": "success", "data": response , "status_code": 200
         }),200
 
-
-
-# @APP.route("/analytics", methods = ["GET"])
-# def careate_rmi_log():
-#     if (request.method == "GET"):
-        
-        
-        
-        
-
-#         return json.dumps({
-#             "message": "response", "status_code": 200
-#         }),200
-
-
-
-
 if (__name__ == "__main__"):
     print("> Starting log server at http://localhost:8080")
     APP.run(debug=True, port=8080)
-    
-    
-    
-    
-# SELECT * FROM post
-# WHERE
-# substr(created_date, 1, 2) = '27' OR '' IS NULL AND 
-# substr(created_date, 4, 2) = '06' AND 
-# substr(created_date, 7, 4) = '2023';
-
-
