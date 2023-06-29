@@ -7,14 +7,17 @@ from flask            import Flask
 from flask            import request
 from flask_cors       import CORS
 
-from entities import RESTLog
-from entities import RMILog
+from core.entities import RESTLog
+from core.entities import RMILog
+from core.entities import RESTLogRetrieveParameters
 
-from controller import CreateRESTLogController
-from controller import CreateRMILogController
+from core.controller import CreateRESTLogController
+from core.controller import CreateRMILogController
+from core.controller import RetrieveRESTLogController
 
-create_rest_log_controller = CreateRESTLogController()
-create_rmi_log_controller  = CreateRMILogController()
+create_rest_log_controller   = CreateRESTLogController()
+create_rmi_log_controller    = CreateRMILogController()
+retrieve_rest_log_controller = RetrieveRESTLogController()
 
 
 
@@ -30,11 +33,21 @@ def route_not_found(error):
             "status_code": 404
         }
     ), 404
+    
+@APP.errorhandler(405)
+def route_not_found(error):
+    code, message = str(error).split(": ")
+    return json.dumps(
+        {
+            "message": message, 
+            "status_code": 405
+        }
+    ), 405
 
-# ================================ USER ROUTES ================================
+# ================================ LOGS ROUTES ================================
 
 @APP.route("/log/rest/new", methods = ["POST"])
-def careate_rest_log():
+def create_rest_log():
     if (request.method == "POST"):
         
         request_parsed = request.get_json() 
@@ -64,7 +77,7 @@ def careate_rest_log():
         }),200
                 
 @APP.route("/log/rmi/new", methods = ["POST"])
-def careate_rmi_log():
+def create_rmi_log():
     if (request.method == "POST"):
         
         request_parsed = request.get_json() 
@@ -96,6 +109,61 @@ def careate_rmi_log():
         }),200
 
 
+@APP.route("/log/retrieve", methods = ["GET"])
+def retrieve_logs():
+    if (request.method == "GET"):
+        
+        http_method   = request.headers["http-method"]
+        http_status   = request.headers["http-status"]
+        url           = request.headers["url"]
+        server_ip     = request.headers["server-ip"]
+        date_day      = request.headers["date-day"]
+        date_month    = request.headers["date-month"]
+        date_year     = request.headers["date-year"]
+        
+        parameters = RESTLogRetrieveParameters(
+            http_method,
+            http_status,
+            url,
+            server_ip,
+            date_day,
+            date_month,
+            date_year,
+        )
+        
+        response = retrieve_rest_log_controller.handle(parameters)
+
+        return json.dumps({
+            "message": "success", "data": response , "status_code": 200
+        }),200
+
+
+# @APP.route("/analytics", methods = ["GET"])
+# def careate_rmi_log():
+#     if (request.method == "GET"):
+        
+        
+        
+        
+
+#         return json.dumps({
+#             "message": "response", "status_code": 200
+#         }),200
+
+
+
+
 if (__name__ == "__main__"):
     print("> Starting log server at http://localhost:8080")
     APP.run(debug=True, port=8080)
+    
+    
+    
+    
+# SELECT * FROM post
+# WHERE
+# substr(created_date, 1, 2) = '27' OR '' IS NULL AND 
+# substr(created_date, 4, 2) = '06' AND 
+# substr(created_date, 7, 4) = '2023';
+
+

@@ -1,2 +1,0 @@
-from .create_rest_log_service import CreateRESTLogService
-from .create_rmi_log_service  import CreateRMILogService

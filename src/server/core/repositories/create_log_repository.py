@@ -1,10 +1,10 @@
 import sqlite3 as SQL
 
-from database import DatabaseConnection
-from database import queries
+from core.database import DatabaseConnection
+from core.database import queries
 
-from entities import RESTLog
-from entities import RMILog
+from core.entities import RESTLog
+from core.entities import RMILog
 
 class CreateLogRepository:
     def create_rest_log(self, id, log: RESTLog, db_connection: DatabaseConnection):
