@@ -1,0 +1,9 @@
+PARAMETROS PARA RECUPERAÇÃO DE LOGS: api rest
+    data: 
+        dia especifico: dd/mm/yyyy
+        mes especifico: xx/mm/yyyy
+        ano especifico: xx/xx/yyyy
+    metodo http: GET, POST, ...
+    response code: 200, 400, ...
+    url: http://localhost:8080/...
+    server_ip: http://localhost:8080
