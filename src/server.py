@@ -169,4 +169,4 @@ def retrieve_rmi_logs():
 
 if (__name__ == "__main__"):
     print("> Starting log server at http://localhost:8080")
-    APP.run(debug=True, port=8080)
+    APP.run(debug=True, port=8083)
